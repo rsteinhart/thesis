@@ -25,3 +25,16 @@ where,
 $$ R_{d} = 287 K/kg $$
 $$ T_{\nu} = T(1 + 0.61r - r_{L} -r_{i}) $$
 
+# Forecast Verification
+## Mean Squared Error
+$$ MSE = \frac{1}{n}\sum_{i=1}^n (Y _{i} - Y _{obs})^{2} $$
+
+# WRF setup
+## Possible physics schemes
+        mp_physics:      8, 8, 4, 4, 8
+        cu_physics:      6, 1, 1, 1, 3
+     ra_lw_physics:      4, 1, 1, 1, 1
+     ra_sw_physics:      4, 1, 1, 1, 1
+    bl_pbl_physics:      2, 7, 1, 12, 1
+ sf_sfclay_physics:      2, 1, 1, 1, 1
+sf_surface_physics:      2, 4, 4, 4, 4
