@@ -29,6 +29,15 @@ $$ T_{\nu} = T(1 + 0.61r - r_{L} -r_{i}) $$
 ## Mean Squared Error
 $$ MSE = \frac{1}{n}\sum_{i=1}^n (Y _{i} - Y _{obs})^{2} $$
 
+## Mean Absolute Error
+$$ MAE = \frac{1}{n}\sum_{i=1}^n |{Y _{i} - Y _{obs}}| $$
+
+## Standard Deviation
+$$ \sigma = \sqrt{\frac{\sum_{i=1}^n ({Y _{i} - Y _{obs}})^{2}}{N}} $$
+
+## Mean Absolute Error Skill Skore
+$$ MAESS = 1 - \frac{MAE_{Forecast_A}}{MAE_{Forecast_B}} $$
+
 # WRF setup
 ## Possible physics schemes
         mp_physics:      8, 8, 4, 4, 8
