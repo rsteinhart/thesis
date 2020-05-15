@@ -1,0 +1,4 @@
+
+export GRIB_DIR=/Users/ewicksteed/Desktop/2019082700/grib_files
+export OUT_DIR=/Users/ewicksteed/Desktop/2019082700/ens_files
+
