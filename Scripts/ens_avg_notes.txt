@@ -1,0 +1,11 @@
+all you would need to do is change the config file
+it’s currently:
+export GRIB_DIR=/Users/ewicksteed/Desktop/2019082700/grib_files
+export OUT_DIR=/Users/ewicksteed/Desktop/2019082700/ens_files
+but you would need to change it to your path to wherever you have the folder with the data: 2019082700
+then you don’t need to create other directories for output, the script should create them for you just have the 
+script and the config file in the same directory
+to run the script first do chmod u+x make_ens.sh 
+this allows the script to be executable
+
+then ./make_ens.sh to run the script
