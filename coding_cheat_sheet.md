@@ -5,6 +5,9 @@
 `echo $0` to see what type of shell you are working in
 `scp <from> <rsteinhart@a23-....:/Users/rsteinhart/....>` to copy between computers
 
+#### Git
+`git config -l` to check git settings
+
 # Scripts
 
 ### Ensemble mean
