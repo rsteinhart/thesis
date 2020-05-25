@@ -47,3 +47,19 @@ $$ MAESS = 1 - \frac{MAE_{Forecast_A}}{MAE_{Forecast_B}} $$
     bl_pbl_physics:      2, 7, 1, 12, 1
  sf_sfclay_physics:      2, 1, 1, 1, 1
 sf_surface_physics:      2, 4, 4, 4, 4
+
+
+# Radiation Schemes WRF
+
+## MM5 (Dudhia) Shortwave
+### Radiative Scheme
+
+$$
+\epsilon(u)=\sum_{i=0}^{i=4}\left(a_{i}+\bar{T} b_{i}\right) x^{i}
+$$
+where $x=\ln u$ and $\bar{T}$ is a $u$ -weighted $T-250$ K. For $=u$ less than $10 \mathrm{g} \mathrm{m}^{-2},$ the form is
+$$
+\epsilon(u)=\sum_{i=1}^{i=4}\left(c_{i}+\bar{T} d_{i}\right) y^{i}
+$$
+
+
