@@ -24,14 +24,14 @@ fi
 # merge ncep and cmc files seperately
 #     gmerge ens_files/fh000_merged_test grib_files/*.t00z.pgrb2f000*
 
-for fcst in "$GRIB_DIR"; do
+for fcst in in $(seq -f "%03g" 0 6 384); do
     # determine if forecast is cmc or ncep files
-    if [[ "$fcst" == "cmc_"* ]]; then
-        gmerge $OUT_DIR/merged_files/cmc_merged.t00z.pgrb2f${fcst} $GRIB_DIR/cmc_*.t00z.pgrb2f000*
-    fi
+    #if [[ "$fcst" == "cmc_"* ]]; then
+    gmerge $OUT_DIR/merged_files/cmc_merged.t00z.pgrb2f${fcst} $GRIB_DIR/cmc_*.t00z.pgrb2f000*
+    #fi
 
-    if [[ "$fcst" == "ncep_"* ]]; then
-        gmerge $OUT_DIR/merged_files/ncep_merged.t00z.pgrb2f${fcst} $GRIB_DIR/ncep_*.t00z.pgrb2f000*
-    fi
+    #if [[ "$fcst" == "ncep_"* ]]; then
+    gmerge $OUT_DIR/merged_files/ncep_merged.t00z.pgrb2f${fcst} $GRIB_DIR/ncep_*.t00z.pgrb2f000*
+    #fi
 
 done
