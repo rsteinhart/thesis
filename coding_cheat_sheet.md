@@ -29,5 +29,5 @@ Called in: `namelists`
 To see the contents of a grib file: `grib_dump [options] grib_file grib_file ...`
 grib_dump options: `-O octet mode. WMO documentation style dumpe`, `-D debug mode`, `-d print all data values`, `-a print key alias information`, `-t print key type information`, `-H octent conteent in hexadecimal`, `-w key[:{s|i|d}]{=|!=}value,...` where clause, `-j JASON output`, `-v print ecCodes Version`
 
-To list the contect of GRIB files: `grib_ls`
+To list the content of GRIB files: `grib_ls`
 grib_ls options: 
