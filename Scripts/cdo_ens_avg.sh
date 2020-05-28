@@ -29,4 +29,6 @@ fi
 # done
 
 # cdo ensmean fileis fileo
-cdo ensmean cmc_* ncep_* ens_average
+cdo ensmean cmc_* cmc_ens_average
+
+cdo ensmean ncep_* ncep_ens_average
