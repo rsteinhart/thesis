@@ -31,3 +31,8 @@ grib_dump options: `-O octet mode. WMO documentation style dumpe`, `-D debug mod
 
 To list the content of GRIB files: `grib_ls`
 grib_ls options: 
+
+See variable names: `wgrib2 -var infline`
+
+#### cdo
+To see what is in infile: `cdo sinfon infile` 
