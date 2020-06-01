@@ -22,8 +22,8 @@ fi
 
 # cdo ensmean fileis file
 for fcst in $(seq -f "%03g" 0 6 384); do
-    cdo ensmean $MERGE_DIR/cmc_* $OUT_DIR/cmc_ens_average.t00z.pgrb2f${fcst}
+    cdo ensmean $MERGE_DIR/cmc_*${fcst} $OUT_DIR/cmc_ens_average.t00z.pgrb2f${fcst}
 
-    cdo ensmean $MERGE_DIR/ncep_* $OUT_DIR/ncep_ens_average.t00z.pgrb2f${fcst}
+    cdo ensmean $MERGE_DIR/ncep_*${fcst} $OUT_DIR/ncep_ens_average.t00z.pgrb2f${fcst}
 
 done
