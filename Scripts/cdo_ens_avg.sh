@@ -26,7 +26,7 @@ for fcst in $(seq -f "%03g" 0 6 384); do
 
 done
 
-echo '!!!!!!!!!!  Merging complete :) !!!!!!!!!!'
+echo '!!!!!!!!!!  Ensemble averaging complete :) !!!!!!!!!!'
 
 
 # To see what each forecast is
