@@ -18,8 +18,6 @@ if [ ! -d "$OUT_DIR/ens_mean" ]; then
     mkdir $OUT_DIR/ens_mean
 fi
 
-# !!!!!!!!! Consider defining a folder for cmc and ncep ens_average files? !!!!!!!!!!!!!!!!!!!!!!
-
 # cdo ensmean fileis file
 for fcst in $(seq -f "%03g" 0 6 384); do
     cdo ensmean $MERGE_DIR/cmc_merged.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/cmc_ens_mean.t00z.pgrb2f${fcst}
@@ -27,3 +25,11 @@ for fcst in $(seq -f "%03g" 0 6 384); do
     cdo ensmean $MERGE_DIR/ncep_merged.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/ncep_ens_mean.t00z.pgrb2f${fcst}
 
 done
+
+echo '!!!!!!!!!!  Merging complete :) !!!!!!!!!!'
+
+
+# To see what each forecast is
+# for fcst in $(seq -f "%03g" 0 6 384); do
+# echo $fcst
+# done
