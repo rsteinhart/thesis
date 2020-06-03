@@ -6,7 +6,7 @@ import pygrib
 
 
 # %%
-file = ncep_merged.t00z.pgrb2f384 #for example
+file = '/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/merged_files/ncep_merged.t00z.pgrb2f384' #for example
 # for file in file_list 
 # make a file list using bash?
 # open the grib file
