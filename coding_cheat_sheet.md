@@ -5,6 +5,11 @@
 `echo $0` to see what type of shell you are working in
 `scp <from> <rsteinhart@a23-....:/Users/rsteinhart/....>` to copy between computers
 
+#### Anaconda
+`conda activate myenv` to activate a different conda environment
+`conda list` to view all the packages loaded in the current environment 
+`conda create --name myenv` to create new environment named myenv
+
 #### Git
 `git config -l` to check git settings
 
