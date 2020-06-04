@@ -40,3 +40,4 @@ for grb in grbs:
     grb = str(grb)
     cmc_var_txt.write(grb)
     cmc_var_txt.write("\n")
+
