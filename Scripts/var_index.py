@@ -16,6 +16,6 @@ cmc_var_index = open("cmc_var_index.txt", "x")
 #grbindex.seek(0)
 for grb in grbs:
     grbindex = pygrib.index(cmc_file,'grb')
-    # grb = str(grb)
+    grbindex = str(grbindex)
     cmc_var_index.write(grbindex)
     cmc_var_index.write("\n")
