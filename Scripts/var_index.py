@@ -13,7 +13,7 @@ grbindex = pygrib.index(cmc_file)
 cmc_var_index = open("cmc_var_index.txt", "x")
 
 # print the inventory of the file to a text file
-grbs.seek(0)
+grbindex.seek(0)
 for grb in grbindex:
     grb = str(grb)
     cmc_var_index.write(grb)
