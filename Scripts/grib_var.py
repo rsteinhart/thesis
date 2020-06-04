@@ -21,3 +21,4 @@ grbs.seek(0)
 for grb in grbs:
     grb = str(grb)
     var_txt.write(grb)
+    var_txt.write("\n")
