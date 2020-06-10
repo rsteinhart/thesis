@@ -9,15 +9,15 @@ if [ ! -d "$OUT_DIR/cmc_vars" ]; then
 fi
 
 for fcst in $(seq -f "%03g" 0 6 384); do
-      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(UGRD|VGRD):(5000.0|10000.0|30000.0|40000.0) Pa:" $OUT_DIR/cmc_vars/UV_cmc_merged.t00z.pgrb2f${fcst}
+      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(UGRD|VGRD):(5000.0|10000.0|30000.0|40000.0) Pa:" -grib $OUT_DIR/cmc_vars/UV_cmc_merged.t00z.pgrb2f${fcst}
 
-      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(HGT):(5000.0|10000.0|30000.0) Pa:" $OUT_DIR/cmc_vars/HGT_cmc_merged.t00z.pgrb2f${fcst}
+      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(HGT):(5000.0|10000.0|30000.0) Pa:" -grib $OUT_DIR/cmc_vars/HGT_cmc_merged.t00z.pgrb2f${fcst}
 
-      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(TMP):(5000.0|10000.0) Pa:" $OUT_DIR/cmc_vars/TMP_cmc_merged.t00z.pgrb2f${fcst}
+      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(TMP):(5000.0|10000.0) Pa:" -grib $OUT_DIR/cmc_vars/TMP_cmc_merged.t00z.pgrb2f${fcst}
 
-      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(RH):(5000.0|10000.0) Pa:" $OUT_DIR/cmc_vars/RH_cmc_merged.t00z.pgrb2f${fcst}
+      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(RH):(5000.0|10000.0) Pa:" -grib $OUT_DIR/cmc_vars/RH_cmc_merged.t00z.pgrb2f${fcst}
 
-      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(SNOD):" $OUT_DIR/cmc_vars/HGT_cmc_merged.t00z.pgrb2f${fcst}
+      wgrib2 -match $IN_DIR/cmc_merged.t00z.pgrb2f$fcst ":(SNOD):" -grib $OUT_DIR/cmc_vars/HGT_cmc_merged.t00z.pgrb2f${fcst}
 done
 
 echo '!!!!!!!!!!!!! Data has been retreived :) !!!!!!!!!!!!!!!!'
