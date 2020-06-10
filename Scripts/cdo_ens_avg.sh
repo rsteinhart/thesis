@@ -20,7 +20,7 @@ fi
 
 # cdo ensmean fileis file
 for fcst in $(seq -f "%03g" 0 6 384); do
-    cdo ensmean $MERGE_DIR/cmc_merged.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/cmn_ensmean.t00z.pgrb2f${fcst}
+    cdo ensmean $MERGE_DIR/cmn_merged.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/cmn_ensmean.t00z.pgrb2f${fcst}
 
     #cdo ensmean $MERGE_DIR/ncep_merged.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/ncep_ens_mean.t00z.pgrb2f${fcst}
 
