@@ -5,8 +5,8 @@
 # echo 'Starting script to merge ensemble files'
 # echo 'System time is:' `date`
 
-OUT_DIR=/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/cmc_vars
-GRIB_DIR=/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/cmc_vars
+OUT_DIR=/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/common_vars
+GRIB_DIR=/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/common_vars
 
 
 # create directory if it doesn't already exist
@@ -26,7 +26,7 @@ fi
 
 for fcst in $(seq -f "%03g" 0 6 384); do
     # merge cmc files
-    gmerge $OUT_DIR/merged_files/sp_cmc_merged.t00z.pgrb2f${fcst} $GRIB_DIR/*_cmc_merged.t00z.pgrb2f${fcst}
+    gmerge $OUT_DIR/merged_files/cmn_cmc_merged.t00z.pgrb2f${fcst} $GRIB_DIR/*_cmc_merged.t00z.pgrb2f${fcst}
 
     # merge ncep files
     #gmerge $OUT_DIR/merged_files/ncep_merged.t00z.pgrb2f${fcst} $GRIB_DIR/ncep_*.t00z.pgrb2f*
