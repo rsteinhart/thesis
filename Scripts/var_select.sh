@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
-IN_DIR = /Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/merged_files 
-OUT_DIR = /Users/rsteinhart/DATA/test_data/NAEFS/cdo_test
+IN_DIR=/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test/merged_files 
+OUT_DIR=/Users/rsteinhart/DATA/test_data/NAEFS/cdo_test
 
 if [ ! -d "$OUT_DIR/cmc_vars" ]; then
     echo 'Output directory does not exist yet... creating directory'
