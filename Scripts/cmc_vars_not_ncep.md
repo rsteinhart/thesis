@@ -1,6 +1,6 @@
 Variables not included in ncep files:
 
-Geopotential Height:gpm (instant):regular_ll:isobaricInhPa:level 5000.0 Pa
+Geopotential Height:gpm (instant):regular_ll:isobaricInhPa:level 5000.0 Pa 5000.0|10000.0|30000.0|40000.0
 Geopotential Height:gpm (instant):regular_ll:isobaricInhPa:level 10000.0
 Geopotential Height:gpm (instant):regular_ll:isobaricInhPa:level 30000.0
 

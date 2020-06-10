@@ -4,6 +4,8 @@
 `yes | rm -r WRF/` to remove a directory and everything in it
 `echo $0` to see what type of shell you are working in
 `scp <from> <rsteinhart@a23-....:/Users/rsteinhart/....>` to copy between computers
+`rename `s/old/new/` files` to rename multiple files at once, where `s/old/new/` are simple strings or regexes
+`for file in $(ls path/*); do mv $file newname_$file done` also renames multiple files
 
 #### Anaconda
 `conda activate myenv` to activate a different conda environment
@@ -41,3 +43,6 @@ See variable names: `wgrib2 -var infline`
 
 #### cdo
 To see what is in infile: `cdo sinfon infile` 
+
+### NetCDF
+`def renameVariable(self, oldname, newname)` 
