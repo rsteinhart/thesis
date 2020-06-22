@@ -26,8 +26,8 @@ fi
 # merge forecast files
 for fcst in $(seq -f "%03g" 0 6 384); do
     # gmerge <to> <from>
-    gmerge $OUT_DIR/cmc_merged.t00z.pgrb2f${fcst} $GRIB_DIR/cmc_*.t00z.pgrb2f${fcst}
-    gmerge $OUT_DIR/ncep_merged.t00z.pgrb2f${fcst} $GRIB_DIR/ncep_*.t00z.pgrb2f${fcst}
+    gmerge $OUT_DIR/cmc_merged.t00z.pgrb2f${fcst} $GRIB_DIR/cmc_*.t00z.pgrb2f${fcst}*
+    gmerge $OUT_DIR/ncep_merged.t00z.pgrb2f${fcst} $GRIB_DIR/ncep_*.t00z.pgrb2f${fcst}*
 
 done
 
