@@ -3,28 +3,39 @@
 IN_DIR=/Volumes/Scratch/Rachel/NAEFS/grib_files
 OUT_DIR=/Volumes/Scratch/Rachel/NAEFS/ensmean
 
+# create the directory for merged original files
 if [ ! -d "$IN_DIR/merged_2019082700" ]; then
     echo 'Output directory does not exist yet... creating directory'
     mkdir $IN_DIR/merged_2019082700
 fi
 
+if [ ! -d "$OUT_DIR" ]; then
+    echo 'Output directory does not exist yet... creating directory'
+    mkdir $OUT_DIR
+fi
+
+# directory for UNIQUE cmc variable files
 if [ ! -d "$OUT_DIR/cmc_unq" ]; then
     echo 'Output directory does not exist yet... creating directory'
     mkdir $OUT_DIR/cmc_unq
 fi
 
+# directory for COMMON cmc and ncep files
 if [ ! -d "$OUT_DIR/common" ]; then
     echo 'Output directory does not exist yet... creating directory'
     mkdir $OUT_DIR/common
 fi
 
-# # merge forecast files
-# for fcst in $(seq -f "%03g" 0 6 384); do
-#     # gmerge <to> <from>
-#     gmerge $IN_DIR/merged_2019082700/cmc_merged.t00z.pgrb2f${fcst} $IN_DIR/cmc_*.t00z.pgrb2f${fcst}*
-#     gmerge $IN_DIR/merged_2019082700/ncep_merged.t00z.pgrb2f${fcst} $IN_DIR/ncep_*.t00z.pgrb2f${fcst}*
+#### Now manipulate original forecast files ###########
 
-# done
+# merge forecast files in order to match variables - only one file per $fcst permitted
+# merge cmc and ncep files seperately to then make files of unique and common variables
+for fcst in $(seq -f "%03g" 0 6 384); do
+    # gmerge <to> <from>
+    gmerge $IN_DIR/merged_2019082700/cmc_merged.t00z.pgrb2f${fcst} $IN_DIR/2019082700/cmc_*.t00z.pgrb2f${fcst}*
+    gmerge $IN_DIR/merged_2019082700/ncep_merged.t00z.pgrb2f${fcst} $IN_DIR/2019082700/ncep_*.t00z.pgrb2f${fcst}*
+
+done
 
 #wgrib2 $file -match PRES -append -grib ${file}_out.grb
 # grab cmc specific variables
@@ -51,6 +62,7 @@ for fcst in $(seq -f "%03g" 0 6 384); do
 
 done
 
+# merge the cmc and ncep common variable files 
 for fcst in $(seq -f "%03g" 0 6 384); do
     # gmerge <to> <from>
     gmerge $OUT_DIR/common/common.t00z.pgrb2f${fcst} $OUT_DIR/common/*_common.t00z.pgrb2f${fcst}
