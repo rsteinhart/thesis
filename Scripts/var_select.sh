@@ -53,7 +53,7 @@ done
 
 for fcst in $(seq -f "%03g" 0 6 384); do
     # gmerge <to> <from>
-    gmerge $OUT_DIR/common/common.t00z.pgrb2f${fcst} $IN_DIR/*_common.t00z.pgrb2f${fcst}
+    gmerge $OUT_DIR/common/common.t00z.pgrb2f${fcst} $OUT_DIR/common/*_common.t00z.pgrb2f${fcst}
     # gmerge $IN_DIR/merged_2019082700/ncep_merged.t00z.pgrb2f${fcst} $IN_DIR/ncep_*.t00z.pgrb2f${fcst}*
 
 done
