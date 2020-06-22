@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-IN_DIR=/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700
+IN_DIR=/Volumes/Scratch/Rachel/NAEFS/grib_files
 OUT_DIR=/Volumes/Scratch/Rachel/NAEFS/ensmean
 
 if [ ! -d "$IN_DIR/merged_2019082700" ]; then
