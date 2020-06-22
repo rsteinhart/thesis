@@ -18,31 +18,31 @@ if [ ! -d "$OUT_DIR/common" ]; then
     mkdir $OUT_DIR/common
 fi
 
-# merge forecast files
-for fcst in $(seq -f "%03g" 0 6 384); do
-    # gmerge <to> <from>
-    gmerge $IN_DIR/merged_2019082700/cmc_merged.t00z.pgrb2f${fcst} $IN_DIR/cmc_*.t00z.pgrb2f${fcst}
-    gmerge $IN_DIR/merged_2019082700/ncep_merged.t00z.pgrb2f${fcst} $IN_DIR/ncep_*.t00z.pgrb2f${fcst}
+# # merge forecast files
+# for fcst in $(seq -f "%03g" 0 6 384); do
+#     # gmerge <to> <from>
+#     gmerge $IN_DIR/merged_2019082700/cmc_merged.t00z.pgrb2f${fcst} $IN_DIR/cmc_*.t00z.pgrb2f${fcst}*
+#     gmerge $IN_DIR/merged_2019082700/ncep_merged.t00z.pgrb2f${fcst} $IN_DIR/ncep_*.t00z.pgrb2f${fcst}*
 
-done
+# done
 
 #wgrib2 $file -match PRES -append -grib ${file}_out.grb
 # grab cmc specific variables
 for fcst in $(seq -f "%03g" 0 6 384); do
-      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst}_BC -match ":(UGRD|VGRD):(5000.0|10000.0|30000.0|40000.0) Pa:" -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
+      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst} -match ":(UGRD|VGRD):(5000.0|10000.0|30000.0|40000.0) Pa:" -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
 
-      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst}_BC -match ":(HGT):(5000.0|10000.0|30000.0) Pa:" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
+      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst} -match ":(HGT):(5000.0|10000.0|30000.0) Pa:" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
 
-      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst}_BC -match ":(TMP):(5000.0|10000.0) Pa:" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
+      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst} -match ":(TMP):(5000.0|10000.0) Pa:" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
 
-      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst}_BC -match ":(RH):(5000.0|10000.0) Pa:" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
+      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst} -match ":(RH):(5000.0|10000.0) Pa:" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
 
-      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst}_BC -match ":(SNOD):" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
+      wgrib2 $IN_DIR/merged_2019082700/cmc_*.t00z.pgrb2f${fcst} -match ":(SNOD):" -append -grib $OUT_DIR/cmc_unq/cmc_unq.t00z.pgrb2f${fcst}
 done
  
 # grab common cmc ncep variables
 for fcst in $(seq -f "%03g" 0 6 384); do
-      wgrib2 $IN_DIR/merged_2019082700/*.t00z.pgrb2f${fcst}_BC -match ":(UGRD|VGRD|HGT|TMP|RH):(20000.0|25000.0|50000.0|70000.0|85000.0|92500.0|100000.0) Pa:" -grib $OUT_DIR/common/common.t00z.pgrb2f${fcst}
+      wgrib2 $IN_DIR/merged_2019082700/*.t00z.pgrb2f${fcst} -match ":(UGRD|VGRD|HGT|TMP|RH):(20000.0|25000.0|50000.0|70000.0|85000.0|92500.0|100000.0) Pa:" -grib $OUT_DIR/common/common.t00z.pgrb2f${fcst}
     #   wgrib2 $IN_DIR/ncep_*.t00z.pgrb2f${fcst}_BC -match ":(UGRD|VGRD|HGT|TMP|RH):(20000.0|25000.0|50000.0|70000.0|85000.0|92500.0|100000.0) Pa:" -grib $OUT_DIR/common/common.t00z.pgrb2f${fcst}
     
 
