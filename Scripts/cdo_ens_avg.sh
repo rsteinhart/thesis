@@ -5,29 +5,39 @@
 # echo 'Starting script to merge ensemble files'
 # echo 'System time is:' `date`
 
-OUT_DIR=/Volumes/Scratch/Rachel/NAEFS/cdo_ensmean
-MATCH_DIR=/Volumes/Scratch/Rachel/NAEFS/cdo_ensmean/match
+OUT_DIR=/Volumes/Scratch/Rachel/NAEFS/ensmean
+UNQ_DIR=/Volumes/Scratch/Rachel/NAEFS/ensmean/cmc_unq
+CMN_DIR=/Volumes/Scratch/Rachel/NAEFS/ensmean/common
 
 if [ ! -d "$OUT_DIR" ]; then
     echo 'Output directory does not exist yet... creating directory'
     mkdir $OUT_DIR
 fi
 
-# if [ ! -d "$OUT_DIR/all_stats" ]; then
-#     echo 'Output directory does not exist yet... creating directory'
-#     mkdir $OUT_DIR/all_stats
-# fi
-
 if [ ! -d "$OUT_DIR/ens_mean" ]; then
     echo 'Output directory does not exist yet... creating directory'
     mkdir $OUT_DIR/ens_mean
 fi
 
+# make ensemble mean of unique cmc variables
+for fcst in $(seq -f "%03g" 0 6 384); do
+    cdo ensmean $UNQ_DIR/cmc_unq.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/cmc_unq_mean.t00z.pgrb2f${fcst}
+done
+
+# make ensemble mean of common merged cmc & ncep variables
+for fcst in $(seq -f "%03g" 0 6 384); do
+    cdo ensmean $CMN_DIR/common.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/common_mean.t00z.pgrb2f${fcst}
+done
+
 
 for fcst in $(seq -f "%03g" 0 6 384); do
-    cdo ensmean $MATCH_DIR/*${fcst}_BC_out.grb $OUT_DIR/ens_mean/cdo_out_mean_${fcst}
+    #gmerge output fcst1 fcst2 fcst3
+    gmerge $OUT_DIR/ens_mean/FULL_ensmean.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/*_mean.t00z.pgrb2f${fcst} 
 
 done
+
+
+echo '!!!!!!!!!!  Ensemble averaging complete :) !!!!!!!!!!'
 
 
 # then need to calc ensemble mean with -ens_processing
@@ -57,7 +67,6 @@ done
 
 # done
 
-echo '!!!!!!!!!!  Ensemble averaging complete :) !!!!!!!!!!'
 
 
 # To see what each forecast is
