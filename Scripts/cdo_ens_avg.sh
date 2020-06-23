@@ -26,15 +26,15 @@ fi
 
 # make ensemble mean of common merged cmc & ncep variables
 for fcst in $(seq -f "%03g" 0 6 384); do
-    cdo ensmean $CMN_DIR/FINAL_common.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/common_mean.t00z.pgrb2f${fcst}
+    cdo ensmean $CMN_DIR/cmc_common.t00z.pgrb2f${fcst} $CMN_DIR/ncep_common.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/common_mean.t00z.pgrb2f${fcst}
 done
 
 
-for fcst in $(seq -f "%03g" 0 6 384); do
-    #gmerge output fcst1 fcst2 fcst3
-    gmerge $OUT_DIR/ens_mean/FULL_ensmean.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/*_mean.t00z.pgrb2f${fcst} 
+# for fcst in $(seq -f "%03g" 0 6 384); do
+#     #gmerge output fcst1 fcst2 fcst3
+#     gmerge $OUT_DIR/ens_mean/FULL_ensmean.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/*_mean.t00z.pgrb2f${fcst} 
 
-done
+# done
 
 
 echo '!!!!!!!!!!  Ensemble averaging complete :) !!!!!!!!!!'
