@@ -20,9 +20,9 @@ if [ ! -d "$OUT_DIR/ens_mean" ]; then
 fi
 
 # make ensemble mean of unique cmc variables
-for fcst in $(seq -f "%03g" 0 6 384); do
-    cdo ensmean $UNQ_DIR/cmc_unq.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/cmc_unq_mean.t00z.pgrb2f${fcst}
-done
+# for fcst in $(seq -f "%03g" 0 6 384); do
+#     cdo ensmean $UNQ_DIR/cmc_unq.t00z.pgrb2f${fcst} $OUT_DIR/ens_mean/cmc_unq_mean.t00z.pgrb2f${fcst}
+# done
 
 # make ensemble mean of common merged cmc & ncep variables
 for fcst in $(seq -f "%03g" 0 6 384); do
