@@ -13,38 +13,38 @@ data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700"
 # -------------------------------------------------- #
 
 # Common variables
-for file in "$data_dir/"*; do
-    echo $file
-    wgrib2 $file -match ":(UGRD|VGRD|HGT|TMP|RH):(200|250|500|700|850|925|1000) mb:" -append -grib ${file}_common_out.grb
-    wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
-    wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
-    wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
-    wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
-    wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
-    wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
-    # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
+# for file in "$data_dir/"*; do
+#     echo $file
+#     wgrib2 $file -match ":(UGRD|VGRD|HGT|TMP|RH):(200|250|500|700|850|925|1000) mb:" -append -grib ${file}_common_out.grb
+#     wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
+#     wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
+#     wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
+#     wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
+#     wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
+#     wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
+#     # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
 
-    # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
-    # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
+#     # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
+#     # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
 
-done
+# done
 
 # CMC specific variables
-for file in "$data_dir/"*; do
-    echo $file
-    wgrib2 $file -match ":(UGRD|VGRD):(50|100|300|400) mb:" -append -grib ${file}_cmc_out.grb
-    wgrib2 $file -match ":(HGT):(50|100|300) mb:" -append -grib ${file}_cmc_out.grb
-    wgrib2 $file -match ":(TMP):(50|100) mb:" -append -grib ${file}_cmc_out.grb
-    wgrib2 $file -match ":(RH):(50|100) mb:" -append -grib ${file}_cmc_out.grb
-    wgrib2 $file -match ":SNOD:" -append -grib ${file}_cmc_out.grb
-    # wgrib2 $file -match ":PWAT:" -append -grib ${file}_out.grb
-    # wgrib2 $file -match ":TCDC:" -append -grib ${file}_out.grb
-    # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
+# for file in "$data_dir/"*; do
+#     echo $file
+#     wgrib2 $file -match ":(UGRD|VGRD):(50|100|300|400) mb:" -append -grib ${file}_cmc_out.grb
+#     wgrib2 $file -match ":(HGT):(50|100|300) mb:" -append -grib ${file}_cmc_out.grb
+#     wgrib2 $file -match ":(TMP):(50|100) mb:" -append -grib ${file}_cmc_out.grb
+#     wgrib2 $file -match ":(RH):(50|100) mb:" -append -grib ${file}_cmc_out.grb
+#     wgrib2 $file -match ":SNOD:" -append -grib ${file}_cmc_out.grb
+#     # wgrib2 $file -match ":PWAT:" -append -grib ${file}_out.grb
+#     # wgrib2 $file -match ":TCDC:" -append -grib ${file}_out.grb
+#     # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
 
-    # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
-    # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
+#     # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
+#     # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
 
-done
+# done
 
 # then you just run the cdo ensmean command with the new files you created. 
 
@@ -55,8 +55,19 @@ for fcst in $(seq -f "%03g" 0 6 384); do
     #echo `ls $data_dir*$fcst*_out.grb`
     #echo ls *fcst*out.grb
     #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
-    cdo ensmean $data_dir*$fcst*_out.grb ${data_dir}cdo_out_mean_$fcst
-    echo 'saved as:' ${data_dir}cdo_out_mean_$fcst
+    cdo ensmean $data_dir/*$fcst*_common_out.grb $data_dir/cdo_common_mean_$fcst
+    echo 'saved as:' cdo_common_mean_$fcst
+done
+
+# then loop through fcst hrs to calc ens mean:
+for fcst in $(seq -f "%03g" 0 6 384); do
+    echo "calculating ensemble mean for fcst hour" $fcst
+    echo ' '
+    #echo `ls $data_dir*$fcst*_out.grb`
+    #echo ls *fcst*out.grb
+    #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
+    cdo ensmean $data_dir/*$fcst*_common_out.grb $data_dir/cdo_cmc_mean_$fcst
+    echo 'saved as:' cdo_cmc_mean_$fcst
 done
 
 
