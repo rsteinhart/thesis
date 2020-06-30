@@ -62,7 +62,7 @@ for file in "$data_dir/"*; do
         wgrib2 $file -match ":(TMP):(50|100) mb:" -append -grib ${file}_cmc_out.grb
         wgrib2 $file -match ":(RH):(50|100) mb:" -append -grib ${file}_cmc_out.grb
         wgrib2 $file -match ":SNOD:" -append -grib ${file}_cmc_out.grb
-        wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
+        wgrib2 $file -match ":TCDC:" -append -grib ${file}_cmc_out.grb
 
     else 
         wgrib2 $file -match ":(UGRD|VGRD):(50|100|300|400) mb:" -append -grib ${file}_cmc_out.grb
