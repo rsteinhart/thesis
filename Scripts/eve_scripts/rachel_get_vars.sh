@@ -13,38 +13,38 @@ data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700"
 # -------------------------------------------------- #
 
 # Common variables
-# for file in "$data_dir/"*; do
-#     echo $file
-#     wgrib2 $file -match ":(UGRD|VGRD|HGT|TMP|RH):(200|250|500|700|850|925|1000) mb:" -append -grib ${file}_common_out.grb
-#     wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
-#     wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
-#     wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
-#     wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
-#     wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
-#     wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
-#     # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
+for file in "$data_dir/"*; do
+    echo $file
+    wgrib2 $file -match ":(UGRD|VGRD|HGT|TMP|RH):(200|250|500|700|850|925|1000) mb:" -append -grib ${file}_common_out.grb
+    wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
+    wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
+    wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
+    wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
+    wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
+    wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
+    # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
 
-#     # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
-#     # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
+    # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
+    # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
 
-# done
+done
 
 # CMC specific variables
-# for file in "$data_dir/"*; do
-#     echo $file
-#     wgrib2 $file -match ":(UGRD|VGRD):(50|100|300|400) mb:" -append -grib ${file}_cmc_out.grb
-#     wgrib2 $file -match ":(HGT):(50|100|300) mb:" -append -grib ${file}_cmc_out.grb
-#     wgrib2 $file -match ":(TMP):(50|100) mb:" -append -grib ${file}_cmc_out.grb
-#     wgrib2 $file -match ":(RH):(50|100) mb:" -append -grib ${file}_cmc_out.grb
-#     wgrib2 $file -match ":SNOD:" -append -grib ${file}_cmc_out.grb
-#     # wgrib2 $file -match ":PWAT:" -append -grib ${file}_out.grb
-#     # wgrib2 $file -match ":TCDC:" -append -grib ${file}_out.grb
-#     # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
+for file in "$data_dir/"*; do
+    echo $file
+    wgrib2 $file -match ":(UGRD|VGRD):(50|100|300|400) mb:" -append -grib ${file}_cmc_out.grb
+    wgrib2 $file -match ":(HGT):(50|100|300) mb:" -append -grib ${file}_cmc_out.grb
+    wgrib2 $file -match ":(TMP):(50|100) mb:" -append -grib ${file}_cmc_out.grb
+    wgrib2 $file -match ":(RH):(50|100) mb:" -append -grib ${file}_cmc_out.grb
+    wgrib2 $file -match ":SNOD:" -append -grib ${file}_cmc_out.grb
+    # wgrib2 $file -match ":PWAT:" -append -grib ${file}_out.grb
+    # wgrib2 $file -match ":TCDC:" -append -grib ${file}_out.grb
+    # wgrib2 $file -match ":APCP:" -append -grib ${file}_out.grb
 
-#     # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
-#     # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
+    # wgrib2 $file -match ":VGRD:10 m" -append -grib ${file}_out.grb
+    # wgrib2 $file -match ":RH:2 m" -append -grib ${file}_out.grb
 
-# done
+done
 
 # then you just run the cdo ensmean command with the new files you created. 
 
