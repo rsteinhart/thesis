@@ -12,17 +12,14 @@
 # output to $data_dir  !!!!!!!!!! CHANGE THIS????????
 
 data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700"
+out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean"
 
 
-if [ ! -d "$data_dir" ]; then
+if [ ! -d "$out_dir" ]; then
     echo 'Output directory does not exist yet... creating directory'
-    mkdir $data_dir
+    mkdir $out_dir
 fi
 
-# if [ ! -d "$data_dir/ens_mean" ]; then
-#     echo 'Output directory does not exist yet... creating directory'
-#     mkdir $data_dir/ens_mean
-# fi
 
 # then loop through fcst hrs to calc ens mean:
 for fcst in $(seq -f "%03g" 0 6 384); do
@@ -31,7 +28,7 @@ for fcst in $(seq -f "%03g" 0 6 384); do
     #echo `ls $data_dir*$fcst*_out.grb`
     #echo ls *fcst*out.grb
     #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
-    cdo ensmean $data_dir/*$fcst*_common_out.grb $data_dir/cdo_common_mean_$fcst
+    cdo ensmean $data_dir/*$fcst*_common_out.grb $out_dir/cdo_common_mean_$fcst
     echo 'saved as:' cdo_common_mean_$fcst
 done
 
@@ -42,7 +39,7 @@ for fcst in $(seq -f "%03g" 0 6 384); do
     #echo `ls $data_dir*$fcst*_out.grb`
     #echo ls *fcst*out.grb
     #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
-    cdo ensmean $data_dir/*$fcst*_common_out.grb $data_dir/cdo_cmc_mean_$fcst
+    cdo ensmean $data_dir/*$fcst*_common_out.grb $out_dir/cdo_cmc_mean_$fcst
     echo 'saved as:' cdo_cmc_mean_$fcst
 done
 
