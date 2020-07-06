@@ -21,7 +21,7 @@ fi
 # -------------------------------------------------- #
 
 for fcst in $(seq -f "%03g" 0 6 384); do
-    cat $data_dir/cdo_cmc_mean_${fcst} $data_dir/cdo_common_mean_${fcst} > $out_dir/FINALmean_${fcst}
+    cat $data_dir/cdo_cmc_mean_${fcst} $data_dir/cdo_common_mean_${fcst} > $out_dir/FINALmean_${fcst}.grb
 
 
 done
