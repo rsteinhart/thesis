@@ -36,7 +36,7 @@ for file in "$data_dir/"*; do
         wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
-        wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
+        wgrib2 $file -match ":VVEL" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
 
     else 
@@ -44,7 +44,7 @@ for file in "$data_dir/"*; do
         wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
-        wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
+        wgrib2 $file -match ":VVEL" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
 
