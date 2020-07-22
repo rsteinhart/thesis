@@ -14,7 +14,7 @@
 
 # -------------------------------------------------- #
 data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700"
-out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
+out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean"
 
 # -------------------------------------------------- #
 
