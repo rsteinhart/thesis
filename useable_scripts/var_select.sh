@@ -11,7 +11,6 @@
 # just 2019082700 files but this will need to be generalized. !!!!!
 # Data is output to the same directory as it is input
 
-
 # -------------------------------------------------- #
 data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700"
 out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
@@ -36,7 +35,7 @@ for file in "$data_dir/"*; do
         wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
-        wgrib2 $file -match ":VVEL" -append -grib ${file}_common_out.grb
+        wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
 
     else 
@@ -44,7 +43,7 @@ for file in "$data_dir/"*; do
         wgrib2 $file -match ":PRES:" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":WEASD" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PRMSL" -append -grib ${file}_common_out.grb
-        wgrib2 $file -match ":VVEL" -append -grib ${file}_common_out.grb
+        wgrib2 $file -match ":WEL" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":PWAT:" -append -grib ${file}_common_out.grb
         wgrib2 $file -match ":TCDC:" -append -grib ${file}_common_out.grb
 
