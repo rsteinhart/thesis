@@ -10,7 +10,7 @@
 
 # -------------------------------------------------- #
 data_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
-out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
+out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean"
 
 # -------------------------------------------------- #
 
