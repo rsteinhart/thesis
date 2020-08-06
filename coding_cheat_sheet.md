@@ -32,14 +32,20 @@ Called in: `namelists`
 
 # Data file types
 
-### GRIB
+### WGRIB2
 To see the contents of a grib file: `grib_dump [options] grib_file grib_file ...`
 grib_dump options: `-O octet mode. WMO documentation style dumpe`, `-D debug mode`, `-d print all data values`, `-a print key alias information`, `-t print key type information`, `-H octent conteent in hexadecimal`, `-w key[:{s|i|d}]{=|!=}value,...` where clause, `-j JASON output`, `-v print ecCodes Version`
 
 To list the content of GRIB files: `grib_ls`
 grib_ls options: 
 
-See variable names: `wgrib2 -var infline`
+See variable names: `wgrib2 -var <filename>`
+
+See the raw variable name: `wgrib2 -varX <filename>`, output format is: var{discipline}_{master table}_{local table}_{center}_{parameter_category}_{parameter}
+
+To change the raw variable name: `wgrib2 -set_var X`, where X is var{discipline}_{master table}_{local table}_{center}_{parameter_category}_{parameter} 
+        $ wgrib2 old.grb -if ":TSOIL:" -set_var SOILTMP -fi -grib new.grb
+
 
 #### cdo
 To see what is in infile: `cdo sinfon infile` 
