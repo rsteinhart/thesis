@@ -11,8 +11,8 @@
 # !!!!!!!!!! Currently input data is from $data_dir and data is also 
 # output to $data_dir  !!!!!!!!!! CHANGE THIS????????
 
-data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2019082700"
-out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean"
+data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100"
+out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/2020080100"
 
 
 if [ ! -d "$out_dir" ]; then
@@ -30,20 +30,21 @@ for fcst in $(seq -f "%03g" 0 6 384); do
     #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
     cdo ensmean $data_dir/*$fcst*_common_out.grb $out_dir/cdo_common_mean_$fcst
     echo 'saved as:' cdo_common_mean_$fcst
-done
 
-# then loop through fcst hrs to calc ens mean:
-for fcst in $(seq -f "%03g" 0 6 384); do
-    echo "calculating ensemble mean for fcst hour" $fcst
-    echo ' '
-    #echo `ls $data_dir*$fcst*_out.grb`
-    #echo ls *fcst*out.grb
-    #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
     cdo ensmean $data_dir/*$fcst*_cmc_out.grb $out_dir/cdo_cmc_mean_$fcst
     echo 'saved as:' cdo_cmc_mean_$fcst
 done
 
-
+# # then loop through fcst hrs to calc ens mean:
+# for fcst in $(seq -f "%03g" 0 6 384); do
+#     echo "calculating ensemble mean for fcst hour" $fcst
+#     echo ' '
+#     #echo `ls $data_dir*$fcst*_out.grb`
+#     #echo ls *fcst*out.grb
+#     #echo 'calc ens mean for' $data_dir*$fcst*_out.grb
+#     cdo ensmean $data_dir/*$fcst*_cmc_out.grb $out_dir/cdo_cmc_mean_$fcst
+#     echo 'saved as:' cdo_cmc_mean_$fcst
+# done
 
 echo ' '
 echo ' '
