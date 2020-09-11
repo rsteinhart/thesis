@@ -9,8 +9,8 @@
 # BUT need to confirm that the ordering of variabes is ok
 
 # -------------------------------------------------- #
-data_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
-out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
+# data_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
+# out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/ens_mean"
 
 # -------------------------------------------------- #
 

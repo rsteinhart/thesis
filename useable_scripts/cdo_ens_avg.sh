@@ -9,7 +9,7 @@
 # variables
 
 # !!!!!!!!!! Currently input data is from $data_dir and data is also 
-# output to $data_dir  !!!!!!!!!! CHANGE THIS????????
+# output to $out_dir
 
 data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100"
 out_dir="/Volumes/Scratch/Rachel/NAEFS/ensmean/2020080100"

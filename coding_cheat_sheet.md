@@ -1,3 +1,9 @@
+# WFRT
+
+### Boreas
+pw: aThi3Shu
+NAEFS file location: `/nfs/neltharion/www/datamart`
+
 # Languages
 
 ### Bash
