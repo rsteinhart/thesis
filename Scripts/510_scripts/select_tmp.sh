@@ -4,7 +4,7 @@
 # November 2020
 
 # -------------------------------------------------- #
-data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100"
+# data_dir="/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100"
 out_dir="/Volumes/Scratch/Rachel/NAEFS/510_temp/det_files"
 
 # -------------------------------------------------- #
@@ -13,7 +13,7 @@ out_dir="/Volumes/Scratch/Rachel/NAEFS/510_temp/det_files"
 
 # grib_get_data -w shortName=t FILE
 
-FILES=$data_dir/*.t00z.pgrb2f000
+FILES=*.t00z.pgrb2f000
 
 for file in $FILES; do
 
