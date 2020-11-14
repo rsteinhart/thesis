@@ -17,6 +17,6 @@ FILES=*.t00z.pgrb2f000
 
 for file in $FILES; do
 
-    wgrib2 $file -match ":TMP" -grib $out_dir/${file}_TMP.grb
+    wgrib2 $file -match ":TMP:2 m above ground:" -grib $out_dir/${file}_TMP.grb
 
 done
