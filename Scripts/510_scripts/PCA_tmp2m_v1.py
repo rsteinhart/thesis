@@ -17,6 +17,7 @@ df_tmp2m.head()
 
 df_ens = pd.read_csv('lat_lon.csv')
 lat = df_ens[['lat']]
+lat = lat[0:23]
 lon = df_ens[['lon']] - 360
 
 # tmp2m = df_tmp2m.drop(columns=['Latitude', ' Longitude'])
@@ -73,6 +74,7 @@ n = 6
 plt.figure(figsize=(25,5*n))
 for kk in range(n):
     plt.subplot(n,2,kk*2+1)
+    # plt.imshow(np.reshape(eigvecs[kk], (len(np.array(lat)), len(np.array(lon)))),cmap='RdBu_r')
     plt.imshow(eigvecs[kk:],cmap='RdBu_r')
     # plt.plot(x_coast_NARR,y_coast_NARR,color='k')
     plt.xlabel('Longitude', fontsize = 20)
@@ -85,7 +87,7 @@ for kk in range(n):
     plt.subplot(n,2,(kk+1)*2)
     plt.plot(PCs[:,kk], linewidth = 0.5)
     plt.title('PCs of Mode #' + str(kk+1), fontsize = 24)
-    plt.xlabel('Day', fontsize = 20)
+    plt.xlabel('???', fontsize = 20)
 
 plt.tight_layout()
 
@@ -145,11 +147,9 @@ for kk in range(n):
 
 # %%
 # show reconstructed data based on how many mode we keep
-
-# ???????????????????????????????????????????????????????????
 saveIt = 0
 
-n_modes_max = 10
+n_modes_max = 4
 
 plt.figure(figsize=(16,6*n_modes_max))
 
@@ -157,34 +157,35 @@ for n_modes in range(n_modes_max):
 
     #plot reconstruction with n_modes
 
-    SLP_rec = np.zeros_like(eigvecs[0])
+    tmp_rec = np.zeros_like(eigvecs[0:])
     for kk in range(n_modes+1):
-        SLP_rec += eigvecs[kk]*PCs[0,kk]
+        tmp_rec += eigvecs[kk]*PCs[0,kk]
 
     plt.subplot(n_modes_max,2,n_modes*2+1)
-    plt.imshow(np.flipud(np.reshape(SLP_rec,(Ny,Nx))),extent = extent,cmap='RdBu_r')
-    plt.plot(x_coast_NARR,y_coast_NARR,color='k')
+    # plt.imshow(np.reshape(np.array(tmp_rec),(np.array(lat),np.array(lon))),cmap='RdBu_r')
+    plt.imshow(tmp_rec,cmap='RdBu_r')
+    # plt.plot(x_coast_NARR,y_coast_NARR,color='k')
     plt.xlabel('Longitude', fontsize = 20)
     plt.ylabel('Latitude', fontsize = 20)
-    plt.xlim((np.nanmin(x_NARR), np.nanmax(x_NARR)))
-    plt.ylim((np.nanmin(y_NARR), np.nanmax(y_NARR)))
+    # plt.xlim((np.nanmin(x_NARR), np.nanmax(x_NARR)))
+    # plt.ylim((np.nanmin(y_NARR), np.nanmax(y_NARR)))
     plt.tick_params(labelbottom=False, labelleft=False)
     plt.title('Reconstruction Using ' + str(kk+1) + ' Modes', fontsize = 24)
 
     #plot original data for this day
 
-    SLP_plot = np.reshape(np.array(SLP[ii]),(Ny,Nx))
-    extent = [np.nanmin(x_NARR), np.nanmax(x_NARR), np.nanmin(y_NARR), np.nanmax(y_NARR)]
+    # TMP_plot = np.reshape(np.array(SLP[ii]),(Ny,Nx))
+    # extent = [np.nanmin(x_NARR), np.nanmax(x_NARR), np.nanmin(y_NARR), np.nanmax(y_NARR)]
 
     plt.subplot(n_modes_max,2,n_modes*2+2)
-    plt.imshow(np.flipud(SLP_plot),extent = extent,cmap='RdBu_r')
-    plt.plot(x_coast_NARR,y_coast_NARR,color='k')
+    plt.imshow(df_tmp2m,cmap='RdBu_r')
+    # plt.plot(x_coast_NARR,y_coast_NARR,color='k')
 
-    plt.title('Original Data: Jan '+str(ii+1)+' 1979', fontsize = 24)
+    plt.title('Original Data', fontsize = 24)
     plt.xlabel('Longitude', fontsize = 20)
     plt.ylabel('Latitude', fontsize = 20)
-    plt.xlim((np.nanmin(x_NARR), np.nanmax(x_NARR)))
-    plt.ylim((np.nanmin(y_NARR), np.nanmax(y_NARR)))
+    # plt.xlim((np.nanmin(x_NARR), np.nanmax(x_NARR)))
+    # plt.ylim((np.nanmin(y_NARR), np.nanmax(y_NARR)))
     plt.tick_params(labelbottom=False, labelleft=False)
 
 plt.tight_layout()
@@ -193,6 +194,13 @@ plt.tight_layout()
 #     plt.savefig(str(img_dir) + '/'+ 'tutorial4_fig6.png')
 
 plt.show()
+
+# %%
+
+
+
+
+
 
 # %%
 
