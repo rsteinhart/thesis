@@ -48,17 +48,25 @@ plt.colorbar()
 plt.show()
 
 # %%
-saveIt = 0
+saveIt = 1
+
+plt.figure(figsize=(30,10))
 
 plt.plot(lon,lat)
 plt.imshow(shifted_tmp,cmap='RdBu_r',interpolation='nearest')
-plt.xlabel('Longitude')
-plt.ylabel('Latitude')
+plt.xlabel('Longitude',fontsize = 20)
+plt.ylabel('Latitude',fontsize = 20)
+plt.tick_params(labelbottom=False, labelleft=False)
+
 # plt.xlim((np.nanmin(lon-360), np.nanmax(lon-360)))
 # plt.xlim((np.nanmin(lon), np.nanmax(lon)))
 # plt.ylim((np.nanmin(lat), np.nanmax(lat)))
-plt.title('2m Temperature - Ensemble Mean Data')
+plt.title('2m TMP - Ensemble Mean',fontsize = 24)
 plt.colorbar()
+
+if saveIt:
+    plt.savefig('ensmean_tmp2m.png')
+    
 
 plt.show()
 

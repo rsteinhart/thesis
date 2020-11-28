@@ -53,11 +53,13 @@ plt.imshow(np.flipud(SLP_plot),cmap='RdBu_r')
 # plt.plot(x_coast_NARR,y_coast_NARR,color='k')
 
 plt.title('2-m temperature from cmc_gec00', fontsize = 24)
+# plt.colorbar()
 plt.xlabel('Longitude', fontsize = 20)
 plt.ylabel('Latitude', fontsize = 20)
 # plt.xlim((np.nanmin(x_NARR), np.nanmax(x_NARR)))
 # plt.ylim((np.nanmin(y_NARR), np.nanmax(y_NARR)))
 plt.tick_params(labelbottom=False, labelleft=False)
+
 
 plt.tight_layout()
 
@@ -70,18 +72,19 @@ plt.show()
 
 saveIt = 0
 
+# plt.figure(figsize=(20,60))
 plt.figure(figsize=(20,60))
 
-for ii in range(10):
+for ii in range(22):
    
-    SLP_plot = np.reshape(np.array(tmp2m),(len(lat),len(lon)))
+    SLP_plot = np.reshape(np.array(tmp2m[ii]),(len(lat),len(lon)))
     # extent = [np.nanmin(x_NARR), np.nanmax(x_NARR), np.nanmin(y_NARR), np.nanmax(y_NARR)]
 
     plt.subplot(10,3,ii+1)
     plt.imshow(np.flipud(SLP_plot),cmap='RdBu_r')
     # plt.plot(x_coast_NARR,y_coast_NARR,color='k')
 
-    plt.title('2-m temperature from cmc_gec0'+str(ii), fontsize = 24)
+    plt.title('2-m temperature from cmc_gec'+str(ii), fontsize = 24)
     plt.xlabel('Longitude', fontsize = 20)
     plt.ylabel('Latitude', fontsize = 20)
     # plt.xlim((np.nanmin(x_NARR), np.nanmax(x_NARR)))
@@ -120,7 +123,7 @@ plt.yticks(fontsize = 20)
 plt.title('Variance Explained by All Modes', fontsize = 24)
 
 plt.subplot(1,2,2)
-n_modes_show = 10
+n_modes_show = 9
 plt.scatter(range(n_modes_show),fracVar[:n_modes_show], s = 100, edgecolor = 'k')
 plt.xlabel('Mode Number', fontsize = 20)
 plt.ylabel('Fraction Variance', fontsize = 20)
@@ -140,7 +143,7 @@ plt.show()
 
 saveIt = 0
 
-n = 4
+n = 9
 Ny = len(lat)
 Nx = len(lon)
 
