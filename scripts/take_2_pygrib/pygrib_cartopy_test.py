@@ -50,11 +50,16 @@ print(t2mens.shape, t2mens.min(), t2mens.max())
 lats, lons = grb.latlons()  # get the lats and lons for the grid.
 print('min/max lat and lon',lats.min(), lats.max(), lons.min(), lons.max())
 # %%
+plt.figure(figsize=(20,10))
 
 tmp = t2mens
 lats, lons = grb.latlons() 
 
-ax = plt.axes(projection=ccrs.PlateCarree())
+# ax = plt.axes(projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
 
 plt.contourf(lons, lats, tmp[0,:,:], 60,
              transform=ccrs.PlateCarree())
@@ -62,3 +67,4 @@ plt.contourf(lons, lats, tmp[0,:,:], 60,
 ax.coastlines()
 
 plt.show()
+# %%
