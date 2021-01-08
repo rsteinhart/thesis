@@ -9,6 +9,7 @@ import pandas
 import os
 import pygrib
 import time
+import cartopy.crs as ccrs
 
 # %%
 #####################################
@@ -24,6 +25,7 @@ test_path = data_folder+'/'+test_file
 
 savedir = '/Volumes/Scratch/Rachel/NAEFS/grib_files/ensmean/'            # directory to save output
 directory = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/'    # location of GRIB files
+ens_members = 42
 # %%
 # grbs = pygrib.open(data_folder+'/'+test_file)
 
@@ -72,20 +74,23 @@ def dewpointCalc(rh,tmp):
     return (237.3 * np.log((es*rh)/611)) / (7.5 * np.log(10) - np.log((es*rh)/611))
 
 # %%
-# create empty arrays (21 perturbations, 64 valid times (384hr fcst / 6 hr))
+# # create empty arrays (21 perturbations, 64 valid times (384hr fcst / 6 hr))
 
-max_temp = np.empty([21,64])    # maximum temperature
-min_temp = np.empty([21,64])    # minimum temperature
-dpt = np.empty([21,64])         # dewpoint
+# max_temp = np.empty([21,64])    # maximum temperature
+# min_temp = np.empty([21,64])    # minimum temperature
+# dpt = np.empty([21,64])         # dewpoint
 
-# default everything to NAN
-min_temp[:,:] = np.NAN
-max_temp[:,:] = np.NAN
-dpt[:,:] = np.NAN
+# # default everything to NAN
+# min_temp[:,:] = np.NAN
+# max_temp[:,:] = np.NAN
+# dpt[:,:] = np.NAN
 
 # %%
 # loop through each GRIB file
 dirs = os.listdir(directory)
+
+max_temp_k = np.zeros((361,720))
+
 # for ix,filename in enumerate(sorted(dirs)):
 for ix,filename in enumerate(dirs):
     print(filename)
@@ -98,25 +103,20 @@ for ix,filename in enumerate(dirs):
     # open the grib file
     grbs = pygrib.open(directory + filename)
 
-    # check for missing/bad files
-    if os.stat(directory + filename).st_size < 40000:
-        max_temp[int(pert)][int(hour)] = float('nan')
-        min_temp[int(pert)][int(hour)] = float('nan')
-        dpt[int(pert)][int(hour)] = float('nan')
-        precip[int(pert)][int(hour)] = float('nan')
-        snow[int(pert)][int(hour)] = float('nan')
-        sleet[int(pert)][int(hour)] = float('nan')
-        fzra[int(pert)][int(hour)] = float('nan')
-        rain[int(pert)][int(hour)] = float('nan')
-        continue
+    # # check for missing/bad files
+    # if os.stat(directory + filename).st_size < 40000:
+    #     max_temp[int(pert)][int(hour)] = float('nan')
+    #     min_temp[int(pert)][int(hour)] = float('nan')
+    #     dpt[int(pert)][int(hour)] = float('nan')
+    #     continue
 
     # get the data
     if '000' in filename:
         # temperature data (K) - same as temperature for initial time
-        max_temp_k = grbs.select(name='2 metre temperature')[0].values
-        min_temp_k = max_temp_k
+        max_temp_k = grbs.select(name='2 metre temperature')[0].values + max_temp_k
+        # min_temp_k = max_temp_k
         # print(max_temp_k)
-        temp_k = max_temp_k
+        # temp_k = max_temp_k
         # relative humidity (%)
         relh_pct = grbs.select(name='2 metre relative humidity')[0].values
         # latitude and longitude
@@ -133,17 +133,9 @@ for ix,filename in enumerate(dirs):
 
     # compute dewpoint from temperature and relative humidity then convert to Fahrenheit
     # dpt_c = dewpointCalc(relh_pct,temp_c)
-
 # %%
-# compute ensemble mean at each forecast hour
-# initialize everything to zero
-max_ensmean = [0.0] * 65
-min_ensmean = [0.0] * 65
-
-# actual ensemble mean calculations
-for i in range(0,65):
-    max_ensmean[i] = np.nanmean(max_temp_k[:,i])
-    min_ensmean[i] = np.nanmean(min_temp_k[:,i])
+# divide the temperature values by the number of members
+max_mean_k = max_temp_k/ens_members 
 
 # %%
 # valid/initial time information
@@ -157,7 +149,7 @@ vtimes = validTimes(str(grbs.message(1).dataDate),str(grbs.message(1).dataTime))
 fig = plt.figure(figsize=(12,8))
 ax = fig.add_subplot(1,1,1)
 plt.plot(vtimes,max_ensmean,color='r',label='Max Temperature')
-plt.plot(vtimes,min_ensmean,color='b',label='Min Temperature')
+# plt.plot(vtimes,min_ensmean,color='b',label='Min Temperature')
 plt.grid(which='major',linestyle='-',color='black')
 plt.grid(which='minor',linestyle='--',color='gray')
 
@@ -189,3 +181,22 @@ plt.show()
 # Now try to make and plot 3d ensmean 
 #####################################
 
+plt.figure(figsize=(20,10))
+
+tmp = np.array(max_mean_k)
+# lats, lons = grbs.latlons() 
+
+# ax = plt.axes(projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
+
+plt.contourf(lons, lats, tmp, 60,
+             transform=ccrs.PlateCarree())
+
+ax.coastlines()
+
+plt.show()
+
+# %%
