@@ -33,6 +33,8 @@ ens_members = 42
 #####################################
 
 # Source 1: https://github.com/jgodwinWX/gefs-plots/blob/master/ensemblemeans.py
+# Source 2: https://confluence.ecmwf.int/display/ECC/grib_ensemble_index
+
 
 # %%
 
@@ -104,12 +106,22 @@ for ix,filename in enumerate(dirs):
 # divide the temperature values by the number of members
 max_mean_k = max_temp_k/ens_members 
 
+
 # %%
 # valid/initial time information
 vtimes = validTimes(str(grbs.message(1).dataDate),str(grbs.message(1).dataTime))
 # print(vtimes)
 # inittime = datetime.datetime.strftime(vtimes[0],'%m/%d %H') + '00 UTC'
 
+# %%
+# get the binary string associated with the coded message
+msg = max_mean_k.tostring()
+grbs.close() # close the grib file
+
+grbout = open(savedir+'test.grb','wb')
+grbout.write(msg)
+grbout.close()
+pygrib.open(savedir+'test.grb')
 # %%
 #####################################
 # Now try to make and plot 3d ensmean 
@@ -138,3 +150,10 @@ plt.show()
     ### Working up until here ### 
 #####################################
 # %%
+##########################################################################
+    # Now try to rework above script for multiple forecast hours #
+##########################################################################
+
+savedir = '/Volumes/Scratch/Rachel/NAEFS/grib_files/ensmean/'            # directory to save output
+directory = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/'    # location of GRIB files
+ens_members = 42
