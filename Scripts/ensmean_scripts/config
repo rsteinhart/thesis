@@ -1,4 +1,4 @@
 
-export GRIB_DIR=/Users/ewicksteed/Desktop/2019082700/grib_files
-export OUT_DIR=/Users/ewicksteed/Desktop/2019082700/ens_files
+export GRIB_DIR=/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100
+export OUT_DIR=/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/ens_files
 

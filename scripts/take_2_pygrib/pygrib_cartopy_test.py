@@ -73,3 +73,136 @@ ax.coastlines()
 
 plt.show()
 # %%
+# close file
+grbs.close()
+# %%
+##########################################################################
+            # Now do same procedure but for ensemble mean #
+            # calculated with `ens_processing` #
+##########################################################################
+
+# %%
+
+#####################################
+# define the data to be used
+#####################################
+
+data_folder = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/ensmean_wgrib2_tests/'
+test_file = 'meanens_sort_cat.t00z.pgrb2f000'
+# %%
+grbs = pygrib.open(data_folder + test_file)
+
+# %%
+for grb in grbs[1:4]:
+    print(grb)
+# %%
+# select desired variables
+tmp_2m = grbs.select(name='2 metre temperature')[0].values
+lats, lons = grb.latlons() 
+# %%
+plt.figure(figsize=(20,10))
+
+tmp = np.array(tmp_2m)
+# lats, lons = grbs.latlons() 
+
+# ax = plt.axes(projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
+
+plt.contourf(lons, lats, tmp, 60,
+             transform=ccrs.PlateCarree())
+
+ax.coastlines()
+
+plt.show()
+# %%
+# select a subset of ensmean data over BC
+grb = grbs.select(name='2 metre temperature')[0]
+
+data, lats, lons = grb.data(lat1=49, lat2=60, lon1=220, lon2=245)
+
+# %%
+plt.figure(figsize=(10,20))
+
+tmp = np.array(data)
+# lats, lons = grbs.latlons() 
+
+ax = plt.axes(projection=ccrs.PlateCarree())
+# ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
+
+plt.contourf(lons, lats, tmp, 60,
+             transform=ccrs.PlateCarree())
+
+ax.coastlines()
+
+plt.show()
+
+# %%
+grbs.close()
+# %%
+
+#####################################
+# define the data to be used
+#####################################
+
+data_folder = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/ensmean_wgrib2_tests/'
+test_file = '2meanens_sort_cat.t00z.pgrb2f000'
+# %%
+grbs = pygrib.open(data_folder + test_file)
+
+# %%
+for grb in grbs[1:4]:
+    print(grb)
+# %%
+# select desired variables
+tmp_2m = grbs.select(name='2 metre temperature')[0].values
+lats, lons = grb.latlons() 
+# %%
+plt.figure(figsize=(20,10))
+
+tmp = np.array(tmp_2m)
+# lats, lons = grbs.latlons() 
+
+# ax = plt.axes(projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
+
+plt.contourf(lons, lats, tmp, 60,
+             transform=ccrs.PlateCarree())
+
+ax.coastlines()
+
+plt.show()
+# %%
+# select a subset of ensmean data over BC
+grb = grbs.select(name='2 metre temperature')[0]
+
+data, lats, lons = grb.data(lat1=49, lat2=60, lon1=220, lon2=245)
+
+# %%
+plt.figure(figsize=(10,20))
+
+tmp = np.array(data)
+# lats, lons = grbs.latlons() 
+
+ax = plt.axes(projection=ccrs.PlateCarree())
+# ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
+
+plt.contourf(lons, lats, tmp, 60,
+             transform=ccrs.PlateCarree())
+
+ax.coastlines()
+
+plt.show()
+
+# %%
