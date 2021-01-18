@@ -88,7 +88,7 @@ grbs.close()
 #####################################
 
 data_folder = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/ensmean_wgrib2_tests/'
-test_file = 'meanens_sort_cat.t00z.pgrb2f000'
+test_file = 'ens_mean.t00z.pgrb2f000.grb'
 # %%
 grbs = pygrib.open(data_folder + test_file)
 
@@ -150,8 +150,8 @@ grbs.close()
 # define the data to be used
 #####################################
 
-data_folder = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/ensmean_wgrib2_tests/'
-test_file = '2meanens_sort_cat.t00z.pgrb2f000'
+data_folder = '/Volumes/Scratch/Rachel/NAEFS/grib_files/mean_2020080100/ens_mean/'
+test_file = 'ens_mean.t00z.pgrb2f216.grb'
 # %%
 grbs = pygrib.open(data_folder + test_file)
 
@@ -163,23 +163,23 @@ for grb in grbs[1:4]:
 tmp_2m = grbs.select(name='2 metre temperature')[0].values
 lats, lons = grb.latlons() 
 # %%
-plt.figure(figsize=(20,10))
+# plt.figure(figsize=(20,10))
 
-tmp = np.array(tmp_2m)
-# lats, lons = grbs.latlons() 
+# tmp = np.array(tmp_2m)
+# # lats, lons = grbs.latlons() 
 
-# ax = plt.axes(projection=ccrs.PlateCarree())
-ax = plt.axes(projection=ccrs.Mollweide())
-# ax = plt.axes(projection=ccrs.Robinson())
+# # ax = plt.axes(projection=ccrs.PlateCarree())
+# ax = plt.axes(projection=ccrs.Mollweide())
+# # ax = plt.axes(projection=ccrs.Robinson())
 
 
 
-plt.contourf(lons, lats, tmp, 60,
-             transform=ccrs.PlateCarree())
+# plt.contourf(lons, lats, tmp, 60,
+#              transform=ccrs.PlateCarree())
 
-ax.coastlines()
+# ax.coastlines()
 
-plt.show()
+# plt.show()
 # %%
 # select a subset of ensmean data over BC
 grb = grbs.select(name='2 metre temperature')[0]
@@ -187,7 +187,8 @@ grb = grbs.select(name='2 metre temperature')[0]
 data, lats, lons = grb.data(lat1=49, lat2=60, lon1=220, lon2=245)
 
 # %%
-plt.figure(figsize=(10,20))
+# plt.figure(figsize=(10,20))
+plt.figure(figsize=(12,6))
 
 tmp = np.array(data)
 # lats, lons = grbs.latlons() 
@@ -196,13 +197,15 @@ ax = plt.axes(projection=ccrs.PlateCarree())
 # ax = plt.axes(projection=ccrs.Mollweide())
 # ax = plt.axes(projection=ccrs.Robinson())
 
-
-
 plt.contourf(lons, lats, tmp, 60,
              transform=ccrs.PlateCarree())
-
+plt.title('2m-Temp Data - Ensemble Mean ('+ test_file[-8:-4]+') \n ', fontsize=15)
+plt.colorbar()
 ax.coastlines()
+gl = ax.gridlines(crs=None, draw_labels=True, xlocs=None, ylocs=None)
 
 plt.show()
 
+# %%
+grbs.close()
 # %%
