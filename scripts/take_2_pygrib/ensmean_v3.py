@@ -10,6 +10,7 @@ import os
 import pygrib
 import time
 import cartopy.crs as ccrs
+# from eccodes import *
 
 # %%
 #####################################
@@ -74,7 +75,7 @@ max_temp_k = np.zeros((361,720))
 
 # for ix,filename in enumerate(sorted(dirs)):
 for ix,filename in enumerate(dirs):
-    print(filename)
+    # print(filename)
     # get the perturbation and valid hour from the filename
     pert = (filename[-17:-15])
     # print(pert)
@@ -114,9 +115,12 @@ vtimes = validTimes(str(grbs.message(1).dataDate),str(grbs.message(1).dataTime))
 # inittime = datetime.datetime.strftime(vtimes[0],'%m/%d %H') + '00 UTC'
 
 # %%
+#####################################
+        # CELL NOT WORKING #
+#####################################
 # get the binary string associated with the coded message
 msg = max_mean_k.tostring()
-grbs.close() # close the grib file
+# grbs.close() # close the grib file
 
 grbout = open(savedir+'test.grb','wb')
 grbout.write(msg)
@@ -150,10 +154,28 @@ plt.show()
     ### Working up until here ### 
 #####################################
 # %%
-##########################################################################
-    # Now try to rework above script for multiple forecast hours #
-##########################################################################
+# select a subset of ensmean data over BC
+grb = grbs.select(name='2 metre temperature')[0]
 
-savedir = '/Volumes/Scratch/Rachel/NAEFS/grib_files/ensmean/'            # directory to save output
-directory = '/Volumes/Scratch/Rachel/NAEFS/grib_files/2020080100/test/'    # location of GRIB files
-ens_members = 42
+data, lats, lons = grb.data(lat1=49, lat2=60, lon1=220, lon2=245)
+
+# %%
+plt.figure(figsize=(10,20))
+
+tmp = np.array(data)
+# lats, lons = grbs.latlons() 
+
+ax = plt.axes(projection=ccrs.PlateCarree())
+# ax = plt.axes(projection=ccrs.Mollweide())
+# ax = plt.axes(projection=ccrs.Robinson())
+
+
+
+plt.contourf(lons, lats, tmp, 60,
+             transform=ccrs.PlateCarree())
+
+ax.coastlines()
+
+plt.show()
+
+# %%
