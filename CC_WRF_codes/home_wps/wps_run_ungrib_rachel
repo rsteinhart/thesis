@@ -1,0 +1,104 @@
+#!/bin/bash -l 
+
+if [ "$#" -ne 4 ]; then
+    echo "year month day ibcs" # include ibcs as input
+    exit 1
+fi
+
+year=$1
+month=$2
+day=$3
+rundate=${year}${month}${day}
+runtime=00
+ibcs=$4
+
+runpath=/home/rachels/scratch/WPS/${ibcs}/${rundate}${runtime} # path to wps output for each ibc and date ??
+# namelists=/home/jeworrek/WRFV3.8.1/namelists
+path=/home/rachels/WRF4.2/WPS # path to WPS ??
+
+# remove any previous runs for this ibc and date to limit confusion #
+rm -rf ${runpath}
+if [ ! -d "$runpath" ]; then
+    mkdir -p $runpath
+fi
+
+# Create ToCopy folder # ??
+if [ ! -d "$path/ToCopy" ]; then 
+    mkdir -p "$path/ToCopy"
+fi
+
+# copy over namelist template to edit for this specific run #
+cp ${path}/namelist.wps.template ${path}/ToCopy/namelist.wps
+# edit time in namelist.wps
+if [[ "04 06 09 11" == *$month* ]]; then # months with 30 days
+        eyear=${year}
+        if [ "${day}" -lt "28" ]; then
+                printf -v eday "%02d" $((${day#0}+03))
+                emonth=${month}
+        else
+                printf -v eday "%02d" $((${day}-27))
+                printf -v emonth "%02d" $((${month#0}+01))
+        fi
+elif [[ ${month#0} -eq "02" ]]; then # Februrary
+        eyear=${year}
+        if [ "${day}" -lt "26" ]; then
+                printf -v eday "%02d" $((${day#0}+03))
+                emonth=${month}
+        else
+                printf -v eday "%02d" $((${day}-25))
+                printf -v emonth "%02d" $((${month}+01))
+        fi
+else # Months with 31 days
+        if [ "${day}" -lt "29" ]; then
+                printf -v eday "%02d" $((${day#0}+03))
+                emonth=${month}
+                eyear=${year}
+        elif [ "${day}" -ge "29" ] && [ "${month}" -eq "12" ]; then
+                printf -v eday "%02d" $((${day}-28))
+                emonth=01
+                eyear=2017
+        else
+                printf -v eday "%02d" $((${day}-28))
+                printf -v emonth "%02d" $((${month#0}+01))
+                eyear=${year}
+        fi
+fi
+
+S1=${year}-${month}-${day}_00:00:00
+E1=${eyear}-${emonth}-${eday}_08:00:00 # 8 hours becaust PST = UTC -8
+
+# Replace dates in Namelist
+sed -i s/SS1/${S1}/g ${path}/ToCopy/namelist.wps
+sed -i s/EE1/${E1}/g ${path}/ToCopy/namelist.wps
+
+sed -i s/DATE/${rundate}/g ${path}/ToCopy/namelist.wps
+
+# Copy copy WPS scripts to ToCopy folder
+#cp geogrid.sh ${path}/ToCopy/geogrid_${month}${day}.sh
+cp geo_em.d0* ${path}/ToCopy
+cp ungrib.sh ${path}/ToCopy/ungrib_${month}${day}.sh
+cp metgrid.sh ${path}/ToCopy/metgrid_${month}${day}.sh
+
+# Copy all edited files to WPS RunDirectory
+cp ${path}/ToCopy/* ${runpath}
+cp GEOGRID.TBL.ARW ${runpath}/GEOGRID.TBL
+cp Vtable.CMC ${runpath}/Vtable
+cp METGRID.TBL ${runpath}/METGRID.TBL
+cp link_grib.csh ${runpath}
+
+# clean up
+rm -f $path/ToCopy/*
+
+#------------------------
+cd $runpath
+
+#echo "Running GEOGRID for ${rundate}"
+#nohup bash geogrid_${month}${day}.sh &>geogrid.log &
+
+echo ${rundate}${runtime}
+./link_grib.csh /home/rachels/scratch/ibcs/${ibcs}/${rundate}${runtime}/
+sbatch ungrib_${month}${day}.sh || exit 1
+echo "Submitted UNGRIB for ${year} ${month} ${day}"
+
+#batch metgrid_${month}${day}.sh || exit 1
+#echo "Submitted METGRID for ${rundate}"

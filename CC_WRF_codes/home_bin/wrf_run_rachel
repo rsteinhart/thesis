@@ -1,0 +1,96 @@
+#!/bin/bash -l  
+
+if [ "$#" -ne 4 ]; then
+    echo "year month day ibcs"
+    exit 1
+fi
+
+year=$1
+month=$2
+day=$3
+rundate=${year}${month}${day}
+runtime=00
+ibcs=$4
+
+runpath=/home/rachels/scratch/ibcs/${ibcs}/${rundate}${runtime} #
+namelists=/home/rachels/WRFV4.2/namelists
+
+rm -rf ${runpath}
+if [ ! -d "$runpath" ]; then
+    mkdir -p $runpath
+fi
+
+# Create ToCopy folder # ????????
+if [ ! -d "$namelists/ToCopy" ]; then
+    mkdir -p "$namelists/ToCopy"
+fi
+
+# copy in the required data for real into wrf
+cp $namelists/wrf_data/* ${runpath} # should contain all the WRF DATA for WRFv4.2
+
+cp ${namelists}/namelist.input.template ${namelists}/ToCopy/namelist.input
+# edit time in namelist.input
+### EDIT "end dates" FOR YOUR SPINUP + RUNTIME
+if [[ "04 06 09 11" == *$month* ]]; then # months with 30 days
+        eyear=${year} # end year
+        if [ "${day}" -lt "28" ]; then
+                printf -v eday "%02d" $((${day#0}+03)) #end day (probably +1 for you)
+                emonth=${month} # end month
+        else
+                printf -v eday "%02d" $((${day}-27))
+                printf -v emonth "%02d" $((${month#0}+01))
+        fi
+elif [[ ${month#0} -eq "02" ]]; then # Februrary
+        eyear=${year}
+        if [ "${day}" -lt "27" ]; then
+                printf -v eday "%02d" $((${day#0}+03))
+                emonth=${month}
+        else
+                printf -v eday "%02d" $((${day}-26))
+                printf -v emonth "%02d" $((${month}+01))
+        fi
+else # Months with 31 days
+        if [ "${day}" -lt "29" ]; then
+                printf -v eday "%02d" $((${day#0}+03))
+                emonth=${month}
+                eyear=${year}
+        elif [ "${day}" -ge "29" ] && [ "${month}" -eq "12" ]; then
+                printf -v eday "%02d" $((${day}-28))
+                emonth=01
+                eyear=2017
+        else
+                printf -v eday "%02d" $((${day}-28))
+                printf -v emonth "%02d" $((${month#0}+01))
+                eyear=${year}
+        fi
+fi
+
+sed -i s/SYY/${year}/g ${namelists}/ToCopy/namelist.input # what is this g ???
+sed -i s/SMM/${month}/g ${namelists}/ToCopy/namelist.input
+sed -i s/SDD/${day}/g ${namelists}/ToCopy/namelist.input
+sed -i s/EYY/${eyear}/g ${namelists}/ToCopy/namelist.input
+sed -i s/EMM/${emonth}/g ${namelists}/ToCopy/namelist.input
+sed -i s/EDD/${eday}/g ${namelists}/ToCopy/namelist.input
+
+# rename submit.sh for easy finding in checking script
+cp ${namelists}/SUBMIT.sh ${namelists}/ToCopy/${month}${day}_${ibcs}.sh
+
+# io_fields_list.txt is a file that lists WRF variables that you do NOT want in your output
+#cp $namelists/io_fields_list.txt $namelists/ToCopy/
+
+# copy the namelists & data
+cp $namelists/ToCopy/* ${runpath}
+
+# clean up namelists
+rm -f $namelists/ToCopy/*
+
+# link in metgrid data
+cd $runpath
+ln -sf /home/rachels/scratch/${ibcs}/.../${rundate}${runtime}/met_em* ${runpath} # EDIT PATH!
+
+# run wrf
+sed -i -e "s@WORKDIR@${runpath}@g" ${month}${day}_${ibcs}.sh || exit 1
+sbatch ${month}${day}_${ibcs}.sh || exit 1
+
+echo "REAL and WRF are submitted for ${rundate} ${runtime} with IBCs #${ibcs}"
+
