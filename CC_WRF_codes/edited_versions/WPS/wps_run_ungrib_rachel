@@ -56,7 +56,7 @@ else # Months with 31 days
         elif [ "${day}" -ge "29" ] && [ "${month}" -eq "12" ]; then
                 printf -v eday "%02d" $((${day}-28))
                 emonth=01
-                eyear=2017
+                eyear=2020
         else
                 printf -v eday "%02d" $((${day}-28))
                 printf -v emonth "%02d" $((${month#0}+01))
@@ -65,7 +65,7 @@ else # Months with 31 days
 fi
 
 S1=${year}-${month}-${day}_00:00:00
-E1=${eyear}-${emonth}-${eday}_08:00:00 # 8 hours becaust PST = UTC -8
+E1=${eyear}-${emonth}-${eday}_00:00:00 # 0 hours cause I only have 72 hours of BCs
 
 # Replace dates in Namelist
 sed -i s/SS1/${S1}/g ${path}/ToCopy/namelist.wps
@@ -82,8 +82,8 @@ cp metgrid.sh ${path}/ToCopy/metgrid_${month}${day}.sh
 # Copy all edited files to WPS RunDirectory
 cp ${path}/ToCopy/* ${runpath}
 cp GEOGRID.TBL.ARW ${runpath}/GEOGRID.TBL
-cp Vtable.CMC ${runpath}/Vtable
-cp METGRID.TBL ${runpath}/METGRID.TBLfile
+cp Vtable.GFS ${runpath}/Vtable
+cp METGRID.TBL ${runpath}/METGRID.TBL
 cp link_grib.csh ${runpath}
 
 # clean up
@@ -96,7 +96,7 @@ cd $runpath
 #nohup bash geogrid_${month}${day}.sh &>geogrid.log &
 
 echo ${rundate}${runtime}
-./link_grib.csh /home/rachels/scratch/ibcs/${ibcs}/${rundate}${runtime}/
+./link_grib.csh /home/rachels/scratch/ibcs/${ibcs}/${rundate}/
 sbatch ungrib_${month}${day}.sh || exit 1
 echo "Submitted UNGRIB for ${year} ${month} ${day}"
 

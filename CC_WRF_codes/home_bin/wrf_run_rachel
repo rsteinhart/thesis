@@ -5,7 +5,7 @@ if [ "$#" -ne 4 ]; then
     exit 1
 fi
 
-year=$1
+year=$1 
 month=$2
 day=$3
 rundate=${year}${month}${day}
@@ -73,7 +73,7 @@ sed -i s/EMM/${emonth}/g ${namelists}/ToCopy/namelist.input
 sed -i s/EDD/${eday}/g ${namelists}/ToCopy/namelist.input
 
 # rename submit.sh for easy finding in checking script
-cp ${namelists}/SUBMIT.sh ${namelists}/ToCopy/${month}${day}_${ibcs}.sh
+cp ${namelists}/SUBMIT_rachel.sh ${namelists}/ToCopy/${month}${day}_${ibcs}.sh
 
 # io_fields_list.txt is a file that lists WRF variables that you do NOT want in your output
 #cp $namelists/io_fields_list.txt $namelists/ToCopy/

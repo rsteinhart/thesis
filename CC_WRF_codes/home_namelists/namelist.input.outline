@@ -1,0 +1,124 @@
+ &time_control
+ run_days                            = run time in days,
+ run_hours                           = run time in hours,
+ run_minutes                         = run time in minutes,
+ run_seconds                         = run time in seconds,
+ start_year                          = four digit year of starting time, SYY, SYY, \
+ start_month                         = two digit month of starting time,   SMM,   SMM,
+ start_day                           = two digit day of starting time,   SDD,   SDD,
+ start_hour                          = two digit hour of starting time,   03,   06,
+ start_minute                        = 00,   00,   00,
+ start_second                        = 00,   00,   00,
+ end_year                            = EYY, EYY, EYY,
+ end_month                           = EMM,   EMM,   EMM,
+ end_day                             = EDD,   EDD,   EDD,
+ end_hour                            = 09,   09,   09,
+ end_minute                          = 00,   00,   00,
+ end_second                          = 00,   00,   00,
+ interval_seconds                    = time interval between incoming real data, which will be the interval between lateral boundary conditions, 21600, 
+ input_from_file                     = logical; whether nested run will have input files for domains other than 1,.true.,.true.,
+ fine_input_stream                   = selected fields from nest input,0 - all fields from nest input are used, 2 - only nest input specified from input stream 2 (defined in the Registry) are used, 2,
+ history_interval                    = history output file interval in minutes (integer only), 60,  60,   60,
+ frames_per_outfile                  = (number of output times per file) output times per history output file, used to split output files into smaller pieces, 1, 1, 1,
+ restart                             = whether this run is a restart run,.false.,
+ restart_interval                    = restart output file interval in minutes,5000,
+ io_form_history ??                    = 2 = netCDF, 10 = GRIB2, 2
+ io_form_restart ??                    = 2
+ io_form_input ??                      = 2
+ io_form_boundary ??                   = 2
+ io_form_auxinput2 ??                  = 2
+ iofields_filename ??                  = "io_fields_list.txt","io_fields_list.txt","io_fields_list.txt","io_fields_list.txt",
+ adjust_output_times ??                = .true.
+ debug_level                         = 0
+/
+
+ &domains
+ time_step ??                          = time step for integration in integer seconds (recommended 6*dx in km for a typical case),150 (180 or 200),
+ time_step_fract_num                 = numerator for fractional time step, 0,
+ time_step_fract_den                 = denominator for fractional time step, 1,
+ max_dom                             = number of domains, 1,
+ s_we                                = start index in x (west-east) direction (leave as is), 1, 1, 1, 1,
+ e_we                                = end index in x (west-east) direction, 121, 199, 349, 280,
+ s_sn                                = start index in y (south-north) direction (leave as is),1, 1, 1, 1,
+ e_sn                                = end index in y (south-north) direction, 121, 229, 385, 280,
+ s_vert                              = start index in z (vertical) direction (leave as is), 1,     1,     1,   1,
+ e_vert                              = number of vertical eta levels. end index in z (vertical) direction. Same value for all nests., 41,    41,    41,  41,
+ num_metgrid_levels                  = number of vertical levels in the incoming data: type ncdump –h to find out, 34, 
+ num_metgrid_soil_levels             = 	number of vertical soil levels or layers input. from WPS metgrid program, 4,
+ eta_levels ??                          = model eta levels (WPS data only). If a user does not specify this, real will provide a set of levels,
+                                       1.000, 0.975, 0.950, 0.925, 0.900,
+                                       0.875, 0.850, 0.825, 0.800, 0.775,
+                                       0.750, 0.725, 0.700, 0.675, 0.650,
+                                       0.625, 0.600, 0.575, 0.550, 0.525,
+                                       0.500, 0.475, 0.450, 0.425, 0.400,
+                                       0.375, 0.350, 0.325, 0.300, 0.275,
+                                       0.250, 0.225, 0.200, 0.175, 0.150,
+                                       0.125, 0.100, 0.075, 0.050, 0.025,
+                                       0.000
+ dx                                  = grid length in x direction, unit in meters, 36000,12000,4000,1333.333,
+ dy                                  = grid length in y direction, unit in meters, 36000,12000,4000,1333.333,
+ grid_id                             = 	domain identifier 1,2,3,4,
+ parent_id                           = 1,1,2,3,
+ i_parent_start                      = 1, 38, 50, 80,
+ j_parent_start                      = 1, 25, 42, 135,
+ parent_grid_ratio                   = 1,3,3,3,
+ parent_time_step_ratio              = 1,3,3,3,
+ feedback                            = 1,
+ smooth_option                       = 0
+ use_adaptive_time_step              = .true.
+ step_to_output_time                 = .true.
+ max_step_increase_pct               = 5, 51, 51, 51,
+ target_cfl                          = 1, 1, 1, 1,
+ max_time_step ??                       = 300 (can delete)
+ /
+
+ &physics
+ physics_suite                       = 'CONUS'
+ mp_physics                          = -1,     MP_var,     MP_var,
+ ra_lw_physics                       = -1,     1,     1,
+ ra_sw_physics                       = -1,     1,     1,
+ radt                                = 30,    20,    10,
+ sf_sfclay_physics                   = -1,     1,     1,
+ sf_surface_physics                  = -1,     LS_var,     LS_var,
+ bl_pbl_physics                      = -1,     PBL_var,     PBL_var,
+ bldt                                = 0,     0,     0,
+ cu_physics                          = -1,     Cu_var,     Cu_var,
+ ??
+ /
+
+ &fdda
+ /
+
+ &dynamics
+ w_damping ??                          = vertical velocity damping flag (for operational use), 1 = with damping, 0 = without damping
+ diff_opt                            = turbulence and mixing option, 1 = evaluates 2nd order diffusion term on coordinate surfaces. 
+                                       uses kvdif for vertical diff unless PBL option is used. may be used with km_opt = 1 and 4. (= 1, recommended for real-data cases),      1,      1,
+ km_opt ??                             = eddy coefficient option, 4,      4,      4, 1 = Constant: K is specified by namelist values for horizontal and vertical diffusion.(use khdif and kvdif)
+ diff_6th_opt                        = 6th-order numerical diffusion, 0 = no 6th-order diffusion (default),      0,      0,
+ diff_6th_factor                     = 6th-order numerical diffusion non-dimensional rate (max value 1.0 corresponds to complete removal of 2dx wave in one timestep), 0.12 = default,   0.12,   0.12,
+ base_temp                           = Base state sea level temperature (K), real only., 290 = default.
+ damp_opt                            = 	upper level damping flag, 3 = with w-Rayleigh damping (dampcoef inverse time scale [1/s] e.g. 0.2; for real-data cases),
+ zdamp                               = damping depth (m) from model top, 5000.,  5000.,  5000.,
+ dampcoef                            = damping coefficient (see damp_opt), 0.2,    0.2,    0.2
+ khdif                               = 0,      0,      0,
+ kvdif                               = 0,      0,      0,
+ non_hydrostatic                     = whether running the model in hydrostatic or non-hydro mode, .true., .true., .true.,
+ moist_adv_opt                       = for moisture, 1,      1,      1,     
+ scalar_adv_opt                      = for scalars, 1,      1,      1,     
+ /
+
+ &bdy_control
+ spec_bdy_width                      = total number of rows for specified boundary value nudging, 5 = default,
+ spec_zone                           = number of points in specified zone (spec b.c. option), 1,
+ relax_zone                          = number of points in relaxation zone (spec b.c. option), 4,
+ specified ??                          = specified boundary conditions (only can be used for to domain 1), .true., .false.,.false.,
+ nested                              = nested boundary conditions (must be set to .true. for nests), .false., .true., .true.,
+ /
+
+ &grib2
+ /
+
+ &namelist_quilt
+ nio_tasks_per_group = 0,
+ nio_groups = 1,
+ /

@@ -5,7 +5,8 @@
 #SBATCH -n 1
 #SBATCH --account=rrg-rstull
 
-module load wps/3.8.1
+module load StdEnv/2020  intel/2020.1.217  openmpi/4.0.3
+module load wps/4.2
 
 mpirun -np 1 ungrib.exe 1>ungrib.log 2>&1
 

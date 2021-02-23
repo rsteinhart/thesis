@@ -1,5 +1,6 @@
 #!/bin/bash -l 
 
+
 # script to submit a whole months (30ish runs) at once
 
 ibc=GFS
